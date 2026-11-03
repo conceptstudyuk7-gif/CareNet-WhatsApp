@@ -1,0 +1,31 @@
+# Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
+
+client_id = "447ba463b8a37bbb478907ed327ccb7c"
+name = "CareNet WhatsApp"
+application_url = "https://carenetsolutions.co.uk/whatsapp"
+embedded = true
+
+[build]
+automatically_update_urls_on_dev = true
+
+[webhooks]
+api_version = "2026-07"
+
+  [[webhooks.subscriptions]]
+  topics = [ "app/scopes_update" ]
+  uri = "/webhooks/app/scopes_update"
+
+  [[webhooks.subscriptions]]
+  topics = [ "app/uninstalled" ]
+  uri = "/webhooks/app/uninstalled"
+
+  [[webhooks.subscriptions]]
+  compliance_topics = [ "customers/data_request", "customers/redact", "shop/redact" ]
+  uri = "/webhooks/compliance"
+
+[access_scopes]
+# App only reads/writes its own installation metafields via GraphQL Admin API.
+scopes = ""
+
+[auth]
+redirect_urls = [ "https://carenetsolutions.co.uk/whatsapp/auth/callback/" ]

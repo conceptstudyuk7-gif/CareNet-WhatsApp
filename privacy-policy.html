@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Privacy Policy for CareNetSolutions Shopify WhatsApp Integration app." />
+  <title>Privacy Policy — CareNetSolutions</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --green: #25d366;
+      --green-dark: #128c7e;
+      --green-light: #86efac;
+      --bg: #07100c;
+      --card: rgba(15, 23, 19, 0.85);
+      --text: #ecfdf5;
+      --text-soft: #a7b9b0;
+      --muted: #6b7f76;
+      --border: rgba(134, 239, 172, 0.14);
+      --sidebar: 280px;
+      --font: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: var(--font);
+      font-size: 15px;
+      line-height: 1.75;
+      color: var(--text-soft);
+      background: var(--bg);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 50% at 10% -10%, rgba(37, 211, 102, 0.16), transparent 55%),
+        radial-gradient(ellipse 50% 40% at 90% 0%, rgba(18, 140, 126, 0.12), transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      width: 0%;
+      background: linear-gradient(90deg, var(--green-dark), var(--green), var(--green-light));
+      z-index: 1000;
+      transition: width 0.15s ease;
+    }
+
+    .layout {
+      display: flex;
+      min-height: 100vh;
+      position: relative;
+      z-index: 1;
+    }
+
+    .sidebar {
+      width: var(--sidebar);
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      overflow-y: auto;
+      padding: 24px 20px;
+      background: rgba(5, 12, 9, 0.92);
+      border-right: 1px solid var(--border);
+      backdrop-filter: blur(20px);
+    }
+
+    .brand img {
+      width: 100%;
+      max-width: 200px;
+      border-radius: 14px;
+      background: #000;
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+      display: block;
+      margin: 0 auto 14px;
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: 15px;
+      font-weight: 700;
+      color: #fff;
+      text-align: center;
+    }
+
+    .brand p {
+      margin: 4px 0 0;
+      font-size: 12px;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .nav-title {
+      margin: 24px 0 10px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .nav {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .nav a {
+      display: block;
+      padding: 8px 12px;
+      border-radius: 10px;
+      color: var(--text-soft);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      transition: background 0.25s ease, color 0.25s ease;
+    }
+
+    .nav a:hover,
+    .nav a.active {
+      background: rgba(37, 211, 102, 0.12);
+      color: #fff;
+    }
+
+    .sidebar-links {
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      display: grid;
+      gap: 8px;
+    }
+
+    .sidebar-links a {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--green-light);
+      text-decoration: none;
+    }
+
+    .sidebar-links a:hover { text-decoration: underline; }
+
+    .main {
+      margin-left: var(--sidebar);
+      flex: 1;
+      padding: 40px 40px 80px;
+      max-width: 820px;
+    }
+
+    .hero {
+      margin-bottom: 28px;
+      animation: fadeUp 0.6s ease both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--green-light);
+      background: rgba(37, 211, 102, 0.12);
+      border: 1px solid rgba(37, 211, 102, 0.28);
+      padding: 5px 12px;
+      border-radius: 999px;
+      margin-bottom: 12px;
+    }
+
+    .hero h2 {
+      margin: 0 0 8px;
+      font-size: clamp(28px, 4vw, 38px);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: #fff;
+      line-height: 1.15;
+    }
+
+    .hero .meta {
+      margin: 0;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+      animation: fadeUp 0.7s ease 0.1s both;
+    }
+
+    .card-accent {
+      height: 3px;
+      background: linear-gradient(90deg, #075e54, var(--green-dark), var(--green), var(--green-light));
+    }
+
+    .content {
+      padding: 28px 32px 32px;
+    }
+
+    .callout {
+      padding: 16px 18px;
+      border-radius: 14px;
+      background: rgba(37, 211, 102, 0.08);
+      border: 1px solid rgba(37, 211, 102, 0.22);
+      color: var(--text-soft);
+      margin-bottom: 24px;
+      font-size: 14px;
+    }
+
+    section {
+      scroll-margin-top: 24px;
+      padding-bottom: 8px;
+    }
+
+    section h3 {
+      margin: 28px 0 10px;
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.02em;
+    }
+
+    section h3:first-of-type { margin-top: 0; }
+
+    section h4 {
+      margin: 20px 0 8px;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--green-light);
+    }
+
+    section p { margin: 0 0 12px; }
+
+    section ul {
+      margin: 0 0 14px;
+      padding-left: 22px;
+    }
+
+    section li { margin-bottom: 6px; }
+
+    section strong { color: #fff; }
+
+    code {
+      background: rgba(37, 211, 102, 0.12);
+      color: var(--green-light);
+      padding: 2px 7px;
+      border-radius: 6px;
+      font-size: 0.9em;
+    }
+
+    a { color: var(--green-light); font-weight: 600; }
+
+    .contact-box {
+      margin-top: 8px;
+      padding: 18px 20px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border);
+    }
+
+    .footer {
+      margin-top: 24px;
+      text-align: center;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .back-top {
+      position: fixed;
+      right: 24px;
+      bottom: 24px;
+      width: 48px;
+      height: 48px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--green), var(--green-dark));
+      color: #fff;
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(12px);
+      transition: all 0.35s ease;
+      z-index: 900;
+    }
+
+    .back-top.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 860px) {
+      .sidebar { position: static; width: 100%; height: auto; }
+      .layout { flex-direction: column; }
+      .main { margin-left: 0; padding: 24px 16px 60px; }
+    }
+
+    @media print {
+      .sidebar, .progress, .back-top { display: none; }
+      .main { margin-left: 0; padding: 0; max-width: 100%; }
+      body { background: #fff; color: #111; }
+      .card { box-shadow: none; border: 1px solid #ddd; }
+      section strong, .hero h2, section h3 { color: #111; }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress" id="progress" aria-hidden="true"></div>
+  <button class="back-top" id="backTop" type="button" aria-label="Back to top">↑</button>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="brand">
+        <img src="assets/carenet-solutions-logo.png" alt="CareNetSolutions logo" />
+        <h1>CareNetSolutions</h1>
+        <p>Privacy Policy</p>
+      </div>
+
+      <p class="nav-title">Sections</p>
+      <ul class="nav" id="nav">
+        <li><a href="#intro">Introduction</a></li>
+        <li><a href="#who">1. Who we are</a></li>
+        <li><a href="#collect">2. Information we collect</a></li>
+        <li><a href="#not-collect">3. What we don't collect</a></li>
+        <li><a href="#use">4. How we use data</a></li>
+        <li><a href="#legal">5. Legal basis</a></li>
+        <li><a href="#share">6. Data sharing</a></li>
+        <li><a href="#whatsapp">7. WhatsApp &amp; visitors</a></li>
+        <li><a href="#retention">8. Data retention</a></li>
+        <li><a href="#security">9. Security</a></li>
+        <li><a href="#transfers">10. International transfers</a></li>
+        <li><a href="#rights">11. Your rights</a></li>
+        <li><a href="#merchant">12. Merchant duties</a></li>
+        <li><a href="#children">13. Children's privacy</a></li>
+        <li><a href="#changes">14. Policy changes</a></li>
+        <li><a href="#contact">15. Contact us</a></li>
+      </ul>
+
+      <div class="sidebar-links">
+        <a href="documentation.html">← App Documentation</a>
+        <a href="mailto:privacy@carenetsolutions.com">privacy@carenetsolutions.com</a>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="hero">
+        <span class="badge">Legal</span>
+        <h2>Privacy Policy</h2>
+        <p class="meta">Shopify WhatsApp Integration · Effective date: May 31, 2026</p>
+      </header>
+
+      <article class="card">
+        <div class="card-accent" aria-hidden="true"></div>
+        <div class="content">
+          <div class="callout" id="intro">
+            This Privacy Policy explains how <strong>CareNetSolutions</strong> ("we," "us," or "our")
+            collects, uses, and protects information when you install or use the
+            <strong>Shopify WhatsApp Integration</strong> application (the "App").
+          </div>
+
+          <section id="who">
+            <h3>1. Who we are</h3>
+            <p>
+              The App is provided by <strong>CareNetSolutions</strong>. The App adds a floating
+              WhatsApp chat button to a merchant's Shopify storefront and provides an admin
+              dashboard to configure that button.
+            </p>
+            <p>
+              This policy applies to merchants who install the App on their Shopify store. It does
+              not create a direct relationship between CareNetSolutions and a merchant's customers
+              who visit the storefront.
+            </p>
+          </section>
+
+          <section id="collect">
+            <h3>2. Information we collect</h3>
+            <p>We collect only the information needed to operate, secure, and support the App.</p>
+
+            <h4>2.1 Merchant and shop information</h4>
+            <p>When you install or use the App, we may process:</p>
+            <ul>
+              <li>Your Shopify store domain (for example, <code>example.myshopify.com</code>)</li>
+              <li>OAuth session and authentication data required to connect the App to your store</li>
+              <li>Shopify API access tokens associated with your installation</li>
+              <li>Basic Shopify staff account details provided through Shopify (such as name, email, and user ID), if available</li>
+              <li>App permissions (API scopes) granted during installation</li>
+            </ul>
+
+            <h4>2.2 App settings you provide</h4>
+            <p>When you configure the App, we store the settings you enter, including:</p>
+            <ul>
+              <li>WhatsApp country code and phone number</li>
+              <li>Default WhatsApp message</li>
+              <li>Button label (accessibility text)</li>
+              <li>Whether the WhatsApp button is enabled or hidden</li>
+            </ul>
+            <p>
+              These settings are stored as app installation metafields in your Shopify store so the
+              storefront button can display the correct information.
+            </p>
+
+            <h4>2.3 Technical and operational data</h4>
+            <p>We may automatically collect limited technical information such as:</p>
+            <ul>
+              <li>Server logs (request timestamps, IP address, and error logs)</li>
+              <li>Webhook events related to app installation, uninstallation, or scope updates</li>
+            </ul>
+          </section>
+
+          <section id="not-collect">
+            <h3>3. Information we do not collect</h3>
+            <p>The App is designed to minimize data collection. We do not:</p>
+            <ul>
+              <li>Collect or store personal information about your storefront customers</li>
+              <li>Read, store, or monitor WhatsApp conversations or message content</li>
+              <li>Collect customer order, payment, or checkout data through this App</li>
+              <li>Track customers across websites for advertising purposes</li>
+              <li>Send automated WhatsApp messages on your behalf</li>
+            </ul>
+          </section>
+
+          <section id="use">
+            <h3>4. How we use information</h3>
+            <p>We use the information described above to:</p>
+            <ul>
+              <li>Install, authenticate, and operate the App</li>
+              <li>Save and display your WhatsApp button settings on your storefront</li>
+              <li>Maintain app security and prevent misuse</li>
+              <li>Respond to support requests and troubleshoot issues</li>
+              <li>Comply with legal obligations and enforce our terms</li>
+              <li>Improve the reliability and performance of the App</li>
+            </ul>
+          </section>
+
+          <section id="legal">
+            <h3>5. Legal basis for processing (EEA/UK merchants)</h3>
+            <p>If you are in the European Economic Area or United Kingdom, we process data on these bases:</p>
+            <ul>
+              <li><strong>Contract:</strong> to provide the App and features you request</li>
+              <li><strong>Legitimate interests:</strong> to secure, maintain, and improve the App</li>
+              <li><strong>Legal obligation:</strong> where required by applicable law</li>
+            </ul>
+          </section>
+
+          <section id="share">
+            <h3>6. How information is shared</h3>
+            <p>We do not sell your personal information. We may share information with:</p>
+            <ul>
+              <li><strong>Shopify:</strong> to install, host, and operate the embedded app</li>
+              <li><strong>Hosting providers:</strong> to run the App and store session data</li>
+              <li><strong>Meta / WhatsApp:</strong> only indirectly when a visitor clicks the WhatsApp button and is redirected to WhatsApp — we do not transmit customer data to Meta through that click</li>
+              <li><strong>Legal recipients:</strong> if required by law, court order, or to protect rights and safety</li>
+            </ul>
+          </section>
+
+          <section id="whatsapp">
+            <h3>7. Storefront visitors and WhatsApp</h3>
+            <p>
+              The App displays a WhatsApp link on your storefront using the phone number and message
+              you configure. When a visitor clicks the button, they leave your store and open
+              WhatsApp (operated by Meta).
+            </p>
+            <p>
+              Meta's terms and privacy policy apply to WhatsApp use. You, as the merchant, are
+              responsible for compliance with applicable laws and Meta's policies.
+            </p>
+          </section>
+
+          <section id="retention">
+            <h3>8. Data retention</h3>
+            <ul>
+              <li><strong>Session data:</strong> retained while the App is installed and as needed for security</li>
+              <li><strong>App settings:</strong> stored in Shopify metafields until changed or the App is uninstalled</li>
+              <li><strong>After uninstall:</strong> we delete associated shop session data from our database</li>
+            </ul>
+          </section>
+
+          <section id="security">
+            <h3>9. Security</h3>
+            <p>
+              We use reasonable administrative, technical, and organizational measures including HTTPS,
+              access controls, and secure storage of session credentials. No method of transmission
+              or storage is completely secure.
+            </p>
+          </section>
+
+          <section id="transfers">
+            <h3>10. International data transfers</h3>
+            <p>
+              Your information may be processed in countries other than your own, including where
+              our hosting providers operate. Where required, we rely on appropriate safeguards.
+            </p>
+          </section>
+
+          <section id="rights">
+            <h3>11. Your rights</h3>
+            <p>
+              Depending on your location, you may have rights to access, correct, delete, restrict,
+              or object to processing of your personal information. Contact us below to exercise
+              these rights. You may also lodge a complaint with your local data protection authority.
+            </p>
+          </section>
+
+          <section id="merchant">
+            <h3>12. Merchant responsibilities</h3>
+            <ul>
+              <li>Provide a WhatsApp number you own or are authorized to use</li>
+              <li>Ensure your storefront privacy notices describe how you communicate with customers</li>
+              <li>Comply with applicable privacy, marketing, and consumer laws</li>
+              <li>Comply with WhatsApp and Meta platform policies</li>
+            </ul>
+          </section>
+
+          <section id="children">
+            <h3>13. Children's privacy</h3>
+            <p>
+              The App is intended for businesses and is not directed to children. We do not knowingly
+              collect personal information from children.
+            </p>
+          </section>
+
+          <section id="changes">
+            <h3>14. Changes to this policy</h3>
+            <p>
+              We may update this Privacy Policy from time to time. We will revise the effective date
+              at the top of this page. Material changes may be communicated through the App or by
+              other reasonable means.
+            </p>
+          </section>
+
+          <section id="contact">
+            <h3>15. Contact us</h3>
+            <div class="contact-box">
+              <p>If you have questions about this Privacy Policy or our data practices, contact:</p>
+              <p style="margin-top: 12px;">
+                <strong>CareNetSolutions</strong><br />
+                Privacy: <a href="mailto:privacy@carenetsolutions.com">privacy@carenetsolutions.com</a><br />
+                Support: <a href="mailto:support@carenetsolutions.com">support@carenetsolutions.com</a>
+              </p>
+            </div>
+          </section>
+        </div>
+      </article>
+
+      <p class="footer">
+        © 2026 CareNetSolutions · Shopify WhatsApp Integration ·
+        <a href="documentation.html">Documentation</a>
+      </p>
+    </main>
+  </div>
+
+  <script>
+    (function () {
+      var progress = document.getElementById("progress");
+      var backTop = document.getElementById("backTop");
+      var navLinks = document.querySelectorAll(".nav a");
+      var sections = document.querySelectorAll("section, .callout");
+
+      function onScroll() {
+        var scrollTop = window.scrollY;
+        var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        var pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+        progress.style.width = pct + "%";
+        backTop.classList.toggle("show", scrollTop > 400);
+      }
+
+      window.addEventListener("scroll", onScroll, { passive: true });
+      onScroll();
+
+      backTop.addEventListener("click", function () {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+
+      var observer = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              var id = entry.target.id;
+              navLinks.forEach(function (link) {
+                link.classList.toggle("active", link.getAttribute("href") === "#" + id);
+              });
+            }
+          });
+        },
+        { threshold: 0.4, rootMargin: "-20% 0px -55% 0px" }
+      );
+
+      sections.forEach(function (section) {
+        if (section.id) observer.observe(section);
+      });
+    })();
+  </script>
+</body>
+</html>

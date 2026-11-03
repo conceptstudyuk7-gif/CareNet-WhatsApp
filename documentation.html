@@ -1,0 +1,2204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CareNetSolutions — CareNet WhatsApp App Documentation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --wa-green: #128c7e;
+      --wa-green-light: #0f766e;
+      --wa-green-dark: #075e54;
+      --wa-glow: rgba(18, 140, 126, 0.22);
+      --bg-deep: #f4f6f8;
+      --bg: #eef2f4;
+      --surface: rgba(255, 255, 255, 0.92);
+      --surface-hover: #ffffff;
+      --surface-solid: #ffffff;
+      --card: rgba(255, 255, 255, 0.98);
+      --text: #111827;
+      --text-soft: #4b5563;
+      --muted: #6b7280;
+      --border: rgba(18, 140, 126, 0.14);
+      --border-strong: rgba(18, 140, 126, 0.24);
+      --code-bg: #f3f4f6;
+      --sidebar-width: 300px;
+      --radius-lg: 20px;
+      --radius-md: 14px;
+      --shadow-premium: 0 12px 40px rgba(16, 24, 40, 0.08), 0 0 0 1px var(--border);
+      --font: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-display: "Instrument Serif", Georgia, serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(28px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-24px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes floatIcon {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-4px);
+      }
+    }
+
+    @keyframes gradientShift {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    @keyframes badgePulse {
+      0%, 100% {
+        box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.45);
+      }
+      50% {
+        box-shadow: 0 0 0 10px rgba(37, 211, 102, 0);
+      }
+    }
+
+    @keyframes shimmer {
+      0% {
+        background-position: -200% center;
+      }
+      100% {
+        background-position: 200% center;
+      }
+    }
+
+    @keyframes progressGlow {
+      0%, 100% {
+        box-shadow: 0 0 8px rgba(37, 211, 102, 0.6);
+      }
+      50% {
+        box-shadow: 0 0 16px rgba(37, 211, 102, 0.9);
+      }
+    }
+
+    .scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 4px;
+      width: 0%;
+      background: linear-gradient(90deg, var(--wa-green), #86efac, #4ade80, var(--wa-green));
+      background-size: 300% 100%;
+      animation: shimmer 2s linear infinite, progressGlow 2s ease infinite;
+      z-index: 1000;
+      transition: width 0.12s cubic-bezier(0.22, 1, 0.36, 1);
+      border-radius: 0 2px 2px 0;
+    }
+
+    /* Page loader */
+    .page-loader {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: linear-gradient(145deg, #f8fafc, #ecfdf5);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 28px;
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+    }
+
+    .page-loader.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .loader-ring {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      border: 3px solid rgba(37, 211, 102, 0.15);
+      border-top-color: var(--wa-green);
+      animation: spin 0.9s linear infinite;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 40px rgba(37, 211, 102, 0.25);
+    }
+
+    .loader-ring svg {
+      width: 34px;
+      height: 34px;
+      animation: floatIcon 2s ease-in-out infinite;
+    }
+
+    .loader-text {
+      color: #4b5563;
+      font-size: 14px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      animation: fadeInUp 0.8s ease both;
+    }
+
+    .loader-bar-wrap {
+      width: 180px;
+      height: 4px;
+      background: rgba(17, 24, 39, 0.08);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .loader-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--wa-green), #86efac);
+      border-radius: 999px;
+      animation: loaderFill 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes loaderFill {
+      to { width: 100%; }
+    }
+
+    @keyframes orbFloat {
+      0%, 100% {
+        transform: translate(0, 0) scale(1);
+        opacity: 0.5;
+      }
+      33% {
+        transform: translate(12px, -18px) scale(1.08);
+        opacity: 0.75;
+      }
+      66% {
+        transform: translate(-8px, 10px) scale(0.95);
+        opacity: 0.4;
+      }
+    }
+
+    @keyframes gradientText {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    @keyframes riseIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.98);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes checkPop {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.25); }
+      100% { transform: scale(1); }
+    }
+
+    body {
+      margin: 0;
+      font-family: var(--font);
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--text);
+      background: var(--bg-deep);
+      position: relative;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 10% -10%, rgba(37, 211, 102, 0.12) 0%, transparent 55%),
+        radial-gradient(ellipse 60% 50% at 90% 10%, rgba(18, 140, 126, 0.1) 0%, transparent 50%),
+        radial-gradient(ellipse 50% 40% at 50% 100%, rgba(37, 211, 102, 0.06) 0%, transparent 45%);
+      pointer-events: none;
+      z-index: 0;
+      animation: gradientShift 14s ease infinite;
+      background-size: 200% 200%;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image: radial-gradient(rgba(18, 140, 126, 0.08) 1px, transparent 1px);
+      background-size: 32px 32px;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.5;
+      mask-image: radial-gradient(ellipse at center, black 30%, transparent 85%);
+    }
+
+    .aurora {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .aurora span {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.35;
+      animation: auroraDrift 18s ease-in-out infinite;
+    }
+
+    .aurora span:nth-child(1) { width: 480px; height: 480px; background: #86efac; top: -10%; left: -5%; opacity: 0.18; }
+    .aurora span:nth-child(2) { width: 360px; height: 360px; background: #6ee7b7; top: 40%; right: -8%; animation-delay: -6s; opacity: 0.14; }
+    .aurora span:nth-child(3) { width: 300px; height: 300px; background: #a7f3d0; bottom: -5%; left: 30%; animation-delay: -12s; opacity: 0.12; }
+
+    @keyframes auroraDrift {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(30px, -40px) scale(1.08); }
+      66% { transform: translate(-20px, 25px) scale(0.95); }
+    }
+
+    .topbar {
+      position: sticky;
+      top: 16px;
+      width: 100%;
+      min-height: 56px;
+      z-index: 500;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 10px 20px;
+      margin-bottom: 28px;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(16, 24, 40, 0.08);
+      animation: fadeInUp 0.8s ease 0.3s both;
+    }
+
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+      flex: 1;
+    }
+
+    .topbar-title {
+      font-size: 13px;
+      color: var(--text-soft);
+      font-weight: 500;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .topbar-actions {
+      display: flex;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .topbar-btn {
+      font-family: var(--font);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 8px 14px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .topbar-btn:hover {
+      background: rgba(37, 211, 102, 0.15);
+      border-color: var(--border-strong);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(37, 211, 102, 0.15);
+    }
+
+    .topbar-btn.primary {
+      background: linear-gradient(135deg, var(--wa-green), var(--wa-green-dark));
+      border-color: transparent;
+      color: #fff;
+    }
+
+    .layout {
+      display: flex;
+      min-height: 100vh;
+      position: relative;
+      z-index: 1;
+    }
+
+    .sidebar {
+      width: var(--sidebar-width);
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(24px) saturate(160%);
+      -webkit-backdrop-filter: blur(24px) saturate(160%);
+      color: var(--text-soft);
+      padding: 28px 22px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      overflow-y: auto;
+      animation: slideInLeft 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+      border-right: 1px solid var(--border);
+      box-shadow: 8px 0 32px rgba(16, 24, 40, 0.06);
+      z-index: 600;
+    }
+
+    .sidebar-progress {
+      margin-bottom: 24px;
+      padding: 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+    }
+
+    .sidebar-progress-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
+    .sidebar-progress-bar {
+      height: 6px;
+      background: #e5e7eb;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .sidebar-progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--wa-green-dark), var(--wa-green), var(--wa-green-light));
+      border-radius: 999px;
+      transition: width 0.2s ease;
+      box-shadow: 0 0 12px var(--wa-glow);
+    }
+
+    .sidebar-brand {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+      animation: fadeInUp 0.6s ease 0.15s both;
+      text-align: center;
+    }
+
+    .sidebar-brand img {
+      width: 88px;
+      height: 88px;
+      object-fit: contain;
+      border-radius: 18px;
+      background: transparent;
+      box-shadow: 0 8px 24px rgba(16, 24, 40, 0.12);
+      flex-shrink: 0;
+    }
+
+    .sidebar-brand h1 {
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.3;
+      color: var(--text);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .sidebar-brand p {
+      margin: 4px 0 0;
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .doc-hero-logo {
+      width: 96px;
+      height: 96px;
+      object-fit: contain;
+      border-radius: 18px;
+      background: transparent;
+      box-shadow: 0 12px 28px rgba(16, 24, 40, 0.12);
+      flex-shrink: 0;
+      margin: 0;
+    }
+
+    .doc-screenshot-grid {
+      display: grid;
+      gap: 24px;
+      margin: 24px 0 32px;
+      grid-template-columns: 1fr;
+    }
+
+    @media (min-width: 960px) {
+      .doc-screenshot-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .doc-screenshot--wide {
+        grid-column: 1 / -1;
+      }
+    }
+
+    .doc-screenshot-badge {
+      display: inline-block;
+      margin: 16px 16px 10px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--wa-green-light);
+      background: rgba(37, 211, 102, 0.12);
+      border: 1px solid var(--border-strong);
+    }
+
+    .doc-screenshot {
+      margin: 0;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: 1px solid var(--border-strong);
+      background: var(--surface-solid);
+      box-shadow: var(--shadow-premium);
+    }
+
+    .doc-screenshot img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .doc-screenshot--wide {
+      max-width: 920px;
+      margin-inline: auto;
+    }
+
+    .doc-screenshot--wide img {
+      max-height: 340px;
+      width: 100%;
+      object-fit: contain;
+      object-position: top center;
+      background: #f4f6f8;
+    }
+
+    .doc-screenshot--panel {
+      max-width: 380px;
+      margin-inline: auto;
+    }
+
+    .doc-screenshot--panel img {
+      max-height: 520px;
+      width: 100%;
+      object-fit: contain;
+      object-position: top center;
+      background: #f4f6f8;
+    }
+
+    .doc-screenshot--guide img {
+      max-height: 480px;
+      width: 100%;
+      object-fit: contain;
+      object-position: top center;
+      background: #f4f6f8;
+    }
+
+    @media (max-width: 959px) {
+      .doc-screenshot--wide img,
+      .doc-screenshot--panel img,
+      .doc-screenshot--guide img {
+        max-height: none;
+      }
+
+      .doc-screenshot--panel {
+        max-width: 100%;
+      }
+    }
+
+    .doc-screenshot figcaption {
+      padding: 14px 18px;
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--text-soft);
+      border-top: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .toc-title {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #9ca3af;
+      margin: 0 0 12px;
+    }
+
+    .toc {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .toc li {
+      margin-bottom: 4px;
+      animation: fadeInUp 0.5s ease both;
+    }
+
+    .toc li:nth-child(1) { animation-delay: 0.05s; }
+    .toc li:nth-child(2) { animation-delay: 0.08s; }
+    .toc li:nth-child(3) { animation-delay: 0.11s; }
+    .toc li:nth-child(4) { animation-delay: 0.14s; }
+    .toc li:nth-child(5) { animation-delay: 0.17s; }
+    .toc li:nth-child(6) { animation-delay: 0.20s; }
+    .toc li:nth-child(7) { animation-delay: 0.23s; }
+    .toc li:nth-child(8) { animation-delay: 0.26s; }
+    .toc li:nth-child(9) { animation-delay: 0.29s; }
+    .toc li:nth-child(10) { animation-delay: 0.32s; }
+    .toc li:nth-child(11) { animation-delay: 0.35s; }
+    .toc li:nth-child(12) { animation-delay: 0.38s; }
+
+    .toc a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      color: var(--text-soft);
+      font-size: 13px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+      border: 1px solid transparent;
+    }
+
+    .toc-num {
+      width: 26px;
+      height: 26px;
+      border-radius: 8px;
+      background: #f3f4f6;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 800;
+      color: var(--muted);
+      flex-shrink: 0;
+      transition: all 0.35s ease;
+    }
+
+    .toc a:hover {
+      background: var(--surface-hover);
+      color: var(--text);
+      text-decoration: none;
+      transform: translateX(4px);
+      border-color: var(--border);
+    }
+
+    .toc a:hover .toc-num {
+      background: rgba(37, 211, 102, 0.2);
+      color: var(--wa-green-light);
+      border-color: var(--border-strong);
+    }
+
+    .toc a.active {
+      background: linear-gradient(135deg, rgba(37, 211, 102, 0.14), rgba(18, 140, 126, 0.08));
+      color: var(--text);
+      border-color: var(--border-strong);
+      box-shadow: 0 4px 20px rgba(37, 211, 102, 0.12);
+    }
+
+    .toc a.active .toc-num {
+      background: linear-gradient(135deg, var(--wa-green), var(--wa-green-dark));
+      color: #fff;
+      border-color: transparent;
+      box-shadow: 0 4px 12px var(--wa-glow);
+    }
+
+    .main {
+      margin-left: var(--sidebar-width);
+      flex: 1;
+      padding: 24px 40px 100px;
+      width: calc(100% - var(--sidebar-width));
+      max-width: none;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero {
+      background: linear-gradient(145deg, #ffffff 0%, #ecfdf5 55%, #f0fdf4 100%);
+      background-size: 200% 200%;
+      color: var(--text);
+      border-radius: var(--radius-lg);
+      padding: 32px 36px 28px;
+      margin-bottom: 36px;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--border-strong);
+      box-shadow: var(--shadow-premium);
+      animation: fadeInUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both, gradientShift 10s ease infinite;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: 24px;
+    }
+
+    .hero-brand {
+      display: flex;
+      align-items: flex-start;
+      gap: 24px;
+    }
+
+    .hero-copy {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      padding: 1px;
+      background: linear-gradient(135deg, rgba(37, 211, 102, 0.5), transparent 40%, rgba(18, 140, 126, 0.3));
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+    }
+
+    .hero h2 {
+      margin: 0 0 12px;
+      font-family: var(--font-display);
+      font-size: clamp(32px, 5vw, 44px);
+      font-weight: 400;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      animation: fadeInUp 0.8s ease 0.3s both;
+      background: linear-gradient(120deg, var(--wa-green-dark) 0%, var(--wa-green) 50%, #044a42 100%);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: fadeInUp 0.8s ease 0.3s both, gradientText 6s ease infinite;
+    }
+
+    .hero p {
+      margin: 0;
+      color: var(--text-soft);
+      max-width: 580px;
+      font-size: 16px;
+      animation: fadeInUp 0.8s ease 0.45s both;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(37, 211, 102, 0.15);
+      color: var(--wa-green-light);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 999px;
+      margin-bottom: 16px;
+      border: 1px solid var(--border-strong);
+      animation: badgePulse 3s ease infinite, fadeInUp 0.7s ease 0.2s both;
+    }
+
+    .badge::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--wa-green);
+      box-shadow: 0 0 8px var(--wa-green);
+      animation: badgePulse 2s ease infinite;
+    }
+
+    section {
+      background: var(--card);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 0;
+      margin-bottom: 28px;
+      opacity: 0;
+      transform: translateY(40px) scale(0.98);
+      transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+                  box-shadow 0.4s ease,
+                  border-color 0.4s ease;
+      box-shadow: var(--shadow-premium);
+      overflow: hidden;
+    }
+
+    section.visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    section.visible:hover {
+      border-color: var(--border-strong);
+      box-shadow: 0 20px 48px rgba(16, 24, 40, 0.1), 0 0 24px rgba(37, 211, 102, 0.08);
+    }
+
+    .section-head {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      padding: 28px 32px 20px;
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(37, 211, 102, 0.06) 0%, transparent 100%);
+    }
+
+    .section-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, rgba(37, 211, 102, 0.2), rgba(18, 140, 126, 0.1));
+      border: 1px solid var(--border-strong);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      box-shadow: 0 8px 24px rgba(37, 211, 102, 0.15);
+      flex-shrink: 0;
+      transform: scale(0.85);
+      opacity: 0;
+    }
+
+    section.visible .section-icon {
+      animation: iconReveal 0.65s cubic-bezier(0.22, 1, 0.36, 1) forwards,
+                 floatIcon 4s ease-in-out 0.65s infinite;
+    }
+
+    @keyframes iconReveal {
+      from {
+        transform: scale(0.6) rotate(-12deg);
+        opacity: 0;
+      }
+      to {
+        transform: scale(1) rotate(0);
+        opacity: 1;
+      }
+    }
+
+    section.visible .section-head {
+      animation: fadeInUp 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    .section-label {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--wa-green-light);
+      margin-bottom: 4px;
+    }
+
+    section h2 {
+      margin: 0;
+      font-family: var(--font-display);
+      font-size: 26px;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      color: var(--text);
+      padding: 0;
+      border: none;
+    }
+
+    section h2::after {
+      display: none;
+    }
+
+    .section-body {
+      padding: 24px 32px 32px;
+    }
+
+    section h3 {
+      margin: 28px 0 12px;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.01em;
+    }
+
+    section h3:first-child {
+      margin-top: 0;
+    }
+
+    section p, section li {
+      color: var(--text-soft);
+    }
+
+    section strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 80% 20%, rgba(37, 211, 102, 0.18) 0%, transparent 45%);
+      pointer-events: none;
+    }
+
+    .hero > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-particles {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .hero-particles span {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(37, 211, 102, 0.35) 0%, transparent 70%);
+      animation: orbFloat 8s ease-in-out infinite;
+    }
+
+    .hero-particles span:nth-child(1) { width: 120px; height: 120px; top: 10%; right: 8%; animation-delay: 0s; }
+    .hero-particles span:nth-child(2) { width: 80px; height: 80px; bottom: 15%; right: 25%; animation-delay: -2s; }
+    .hero-particles span:nth-child(3) { width: 60px; height: 60px; top: 40%; right: 45%; animation-delay: -4s; }
+    .hero-particles span:nth-child(4) { width: 100px; height: 100px; bottom: 5%; left: 55%; animation-delay: -1s; }
+
+    .hero-spotlight {
+      position: absolute;
+      width: 320px;
+      height: 320px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(37, 211, 102, 0.18) 0%, transparent 65%);
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      transition: opacity 0.3s ease;
+      opacity: 0;
+    }
+
+    .hero:hover .hero-spotlight {
+      opacity: 1;
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      animation: fadeInUp 0.7s ease 0.55s both;
+    }
+
+    .hero-stat {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 16px 18px;
+      min-width: 0;
+      backdrop-filter: blur(12px);
+      transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .hero-stat:hover {
+      transform: translateY(-8px) scale(1.04);
+      background: rgba(37, 211, 102, 0.1);
+      border-color: var(--border-strong);
+      box-shadow: 0 16px 40px rgba(37, 211, 102, 0.15);
+    }
+
+    .hero-stat strong {
+      display: block;
+      font-size: 24px;
+      font-family: var(--font-display);
+      color: var(--wa-green-light);
+      line-height: 1.2;
+    }
+
+    .hero-stat span {
+      font-size: 11px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 600;
+    }
+
+    section.visible .meta-card,
+    section.visible tbody tr,
+    section.visible .checklist li,
+    section.visible .steps li,
+    section.visible blockquote,
+    section.visible .callout {
+      opacity: 0;
+      animation: riseIn 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    section.visible .meta-card:nth-child(1) { animation-delay: 0.06s; }
+    section.visible .meta-card:nth-child(2) { animation-delay: 0.12s; }
+    section.visible tbody tr:nth-child(1) { animation-delay: 0.05s; }
+    section.visible tbody tr:nth-child(2) { animation-delay: 0.1s; }
+    section.visible tbody tr:nth-child(3) { animation-delay: 0.15s; }
+    section.visible tbody tr:nth-child(4) { animation-delay: 0.2s; }
+    section.visible tbody tr:nth-child(5) { animation-delay: 0.25s; }
+    section.visible tbody tr:nth-child(6) { animation-delay: 0.3s; }
+    section.visible tbody tr:nth-child(7) { animation-delay: 0.35s; }
+    section.visible .checklist li:nth-child(odd) { animation-delay: 0.05s; }
+    section.visible .checklist li:nth-child(even) { animation-delay: 0.12s; }
+    section.visible .steps li:nth-child(1) { animation-delay: 0.05s; }
+    section.visible .steps li:nth-child(2) { animation-delay: 0.1s; }
+    section.visible .steps li:nth-child(3) { animation-delay: 0.15s; }
+    section.visible .steps li:nth-child(4) { animation-delay: 0.2s; }
+    section.visible .steps li:nth-child(5) { animation-delay: 0.25s; }
+    section.visible .steps li:nth-child(6) { animation-delay: 0.3s; }
+    section.visible .steps li:nth-child(7) { animation-delay: 0.35s; }
+    section.visible .steps li:nth-child(8) { animation-delay: 0.4s; }
+
+    a {
+      color: var(--wa-green-light);
+      text-decoration: none;
+      position: relative;
+      transition: color 0.25s ease;
+    }
+
+    a:not(.toc a):hover {
+      color: var(--wa-green-dark);
+    }
+
+    .main a:not(.toc a)::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -2px;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--wa-green), #86efac);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .main a:not(.toc a):hover::after {
+      transform: scaleX(1);
+    }
+
+    .main a:not(.toc a):hover {
+      text-decoration: none;
+    }
+
+    p {
+      margin: 0 0 12px;
+    }
+
+    ul, ol {
+      margin: 0 0 16px;
+      padding-left: 22px;
+    }
+
+    li {
+      margin-bottom: 6px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      margin: 16px 0 20px;
+      font-size: 14px;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    th, td {
+      border-bottom: 1px solid var(--border);
+      padding: 14px 18px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: rgba(37, 211, 102, 0.08);
+      font-weight: 700;
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--wa-green-light);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tbody tr {
+      background: #fafafa;
+      transition: background 0.3s ease, transform 0.3s ease;
+    }
+
+    tbody tr:hover {
+      background: rgba(37, 211, 102, 0.06);
+    }
+
+    code {
+      background: rgba(37, 211, 102, 0.1);
+      color: var(--wa-green-light);
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 0.88em;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      border: 1px solid var(--border);
+    }
+
+    pre {
+      background: var(--code-bg);
+      color: #1f2937;
+      padding: 0;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      font-size: 13px;
+      line-height: 1.6;
+      margin: 16px 0 20px;
+      transition: box-shadow 0.4s ease, transform 0.4s ease;
+      border: 1px solid var(--border);
+    }
+
+    .code-head {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 12px 16px;
+      background: #e5e7eb;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .code-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .code-dot.red { background: #ff5f57; }
+    .code-dot.yellow { background: #febc2e; }
+    .code-dot.green { background: #28c840; }
+
+    .code-label {
+      margin-left: auto;
+      font-size: 11px;
+      color: var(--muted);
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    pre code {
+      display: block;
+      padding: 18px 20px;
+      background: none;
+      border: none;
+      color: inherit;
+    }
+
+    pre:hover {
+      box-shadow: 0 12px 40px rgba(37, 211, 102, 0.12);
+      transform: translateY(-3px);
+      border-color: var(--border-strong);
+    }
+
+    .callout {
+      border-left: 3px solid var(--wa-green);
+      background: rgba(37, 211, 102, 0.08);
+      padding: 16px 20px;
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+      margin: 20px 0;
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
+      border-top: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .callout strong {
+      color: var(--wa-green-dark);
+    }
+
+    .callout-warn {
+      border-left-color: #fbbf24;
+      background: rgba(251, 191, 36, 0.08);
+    }
+
+    .callout-warn strong {
+      color: #b45309;
+    }
+
+    blockquote {
+      margin: 16px 0;
+      padding: 18px 22px;
+      background: var(--surface);
+      border-left: 3px solid var(--border-strong);
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+      color: var(--text-soft);
+      font-style: italic;
+      border-top: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .meta-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 18px 20px;
+      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+      transform-style: preserve-3d;
+      will-change: transform;
+    }
+
+    .meta-card:hover {
+      border-color: var(--border-strong);
+      box-shadow: 0 12px 32px rgba(37, 211, 102, 0.12);
+    }
+
+    .meta-card span {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      color: var(--muted);
+    }
+
+    .meta-card strong {
+      color: var(--text);
+      font-size: 15px;
+    }
+
+    .premium-footer {
+      background: linear-gradient(135deg, rgba(37, 211, 102, 0.12), rgba(18, 140, 126, 0.08));
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-lg);
+      padding: 36px 40px;
+      text-align: center;
+      margin-top: 12px;
+      box-shadow: var(--shadow-premium);
+      animation: fadeInUp 0.8s ease both;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .premium-footer::before {
+      content: "";
+      position: absolute;
+      inset: -50%;
+      background: conic-gradient(from 0deg, transparent, rgba(37, 211, 102, 0.08), transparent 30%);
+      animation: spin 12s linear infinite;
+      pointer-events: none;
+    }
+
+    .premium-footer > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .premium-footer .topbar-btn {
+      padding: 12px 24px;
+      font-size: 14px;
+      animation: badgePulse 3s ease infinite;
+    }
+
+    .premium-footer h3 {
+      font-family: var(--font-display);
+      font-size: 28px;
+      color: var(--text);
+      margin: 0 0 8px;
+      font-weight: 400;
+    }
+
+    .premium-footer p {
+      color: var(--text-soft);
+      margin: 0 0 20px;
+    }
+
+    .footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+      padding-top: 24px;
+      animation: fadeInUp 0.8s ease both;
+    }
+
+    .back-top {
+      position: fixed;
+      right: 28px;
+      bottom: 28px;
+      width: 52px;
+      height: 52px;
+      border: 1px solid var(--border-strong);
+      border-radius: 16px;
+      background: linear-gradient(135deg, rgba(37, 211, 102, 0.9), var(--wa-green-dark));
+      color: #fff;
+      font-size: 20px;
+      font-weight: 700;
+      cursor: pointer;
+      z-index: 900;
+      box-shadow: 0 12px 32px var(--wa-glow);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(20px) scale(0.85);
+      transition: all 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .back-top.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0) scale(1);
+    }
+
+    .back-top:hover {
+      transform: translateY(-6px) scale(1.06);
+      box-shadow: 0 16px 40px var(--wa-glow);
+    }
+
+    .callout:hover {
+      transform: translateX(6px);
+      box-shadow: -6px 8px 24px rgba(37, 211, 102, 0.1);
+    }
+
+    .checklist {
+      list-style: none;
+      padding: 0;
+    }
+
+    .checklist li {
+      padding: 10px 0 10px 32px;
+      position: relative;
+      border-bottom: 1px solid var(--border);
+      transition: padding-left 0.3s ease, color 0.3s ease;
+    }
+
+    .checklist li:hover {
+      padding-left: 38px;
+      color: var(--wa-green-light);
+    }
+
+    .checklist li::before {
+      content: "☐";
+      position: absolute;
+      left: 0;
+      color: var(--wa-green-light);
+      font-size: 18px;
+    }
+
+    .checklist li:hover::before {
+      content: "☑";
+      animation: checkPop 0.4s ease;
+    }
+
+    .checklist li:last-child {
+      border-bottom: none;
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .meta-card.tilt-active {
+      transition: transform 0.08s linear, box-shadow 0.35s ease, border-color 0.35s ease;
+    }
+
+    .steps {
+      counter-reset: step;
+      list-style: none;
+      padding: 0;
+    }
+
+    .steps li {
+      counter-increment: step;
+      padding: 14px 0 14px 48px;
+      position: relative;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .steps li::before {
+      content: counter(step);
+      position: absolute;
+      left: 0;
+      top: 12px;
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, var(--wa-green), var(--wa-green-dark));
+      color: #fff;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 6px 16px var(--wa-glow);
+      transition: transform 0.35s ease;
+    }
+
+    .steps li:hover::before {
+      transform: scale(1.12) rotate(-4deg);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+
+      .page-loader {
+        display: none !important;
+      }
+
+      section,
+      section.visible .meta-card,
+      section.visible tbody tr,
+      section.visible .checklist li,
+      section.visible .steps li {
+        opacity: 1 !important;
+        transform: none !important;
+        animation: none !important;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .topbar {
+        top: 8px;
+        min-height: 52px;
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 10px 14px;
+      }
+
+      .topbar-left {
+        width: 100%;
+      }
+
+      .topbar-actions {
+        width: 100%;
+        justify-content: flex-end;
+      }
+
+      .layout {
+        flex-direction: column;
+      }
+
+      .sidebar {
+        position: static;
+        width: 100%;
+        height: auto;
+      }
+
+      .main {
+        margin-left: 0;
+        padding: 16px 16px 60px;
+        width: 100%;
+      }
+
+      .hero-brand {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+
+      .hero-copy {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .hero p {
+        text-align: center;
+      }
+
+      .hero-stats {
+        grid-template-columns: 1fr;
+      }
+
+      .meta-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media print {
+      .sidebar,
+      .page-loader,
+      .scroll-progress,
+      .back-top,
+      .topbar,
+      .aurora {
+        display: none;
+      }
+
+      .main {
+        margin-left: 0;
+        padding: 0;
+        max-width: 100%;
+      }
+
+      section {
+        break-inside: avoid;
+        box-shadow: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="aurora" aria-hidden="true"><span></span><span></span><span></span></div>
+
+  <div class="page-loader" id="pageLoader" aria-hidden="true">
+    <div class="loader-ring">
+      <svg viewBox="0 0 24 24" fill="#25D366" aria-hidden="true">
+        <path d="M20.52 3.48A11.86 11.86 0 0 0 12.07 0C5.5 0 .16 5.35.16 11.92c0 2.1.55 4.16 1.59 5.98L0 24l6.29-1.65a11.9 11.9 0 0 0 5.78 1.48h.01c6.57 0 11.92-5.35 11.92-11.92 0-3.18-1.24-6.16-3.48-8.43Zm-8.45 18.33h-.01a9.95 9.95 0 0 1-5.07-1.39l-.36-.21-3.73.98 1-3.64-.23-.37a9.92 9.92 0 0 1-1.53-5.27c0-5.48 4.46-9.94 9.94-9.94 2.65 0 5.13 1.03 7 2.9a9.83 9.83 0 0 1 2.91 7.01c0 5.48-4.46 9.94-9.93 9.94Zm5.45-7.44c-.3-.15-1.79-.88-2.07-.98-.28-.1-.48-.15-.69.15-.2.3-.79.98-.96 1.18-.18.2-.35.22-.65.08-.3-.15-1.25-.46-2.38-1.47-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.61.14-.14.3-.35.45-.53.15-.18.2-.3.3-.5.1-.2.05-.38-.03-.53-.08-.15-.69-1.66-.95-2.28-.25-.6-.5-.52-.69-.53l-.58-.01c-.2 0-.53.08-.8.38-.28.3-1.05 1.03-1.05 2.5s1.08 2.9 1.23 3.1c.15.2 2.12 3.24 5.14 4.54.72.31 1.29.5 1.73.64.73.23 1.4.2 1.93.12.59-.09 1.79-.73 2.04-1.44.25-.71.25-1.31.18-1.44-.08-.13-.28-.2-.58-.35Z"/>
+      </svg>
+    </div>
+    <p class="loader-text">Loading documentation</p>
+    <div class="loader-bar-wrap"><div class="loader-bar"></div></div>
+  </div>
+
+  <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+  <button class="back-top" id="backTop" type="button" aria-label="Back to top">↑</button>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <img src="assets/carenet-solutions-logo.png" alt="CareNetSolutions — Shopify WhatsApp Integration" />
+        <div>
+          <h1>CareNetSolutions</h1>
+          <p>CareNet WhatsApp</p>
+        </div>
+      </div>
+      <div class="sidebar-progress">
+        <div class="sidebar-progress-label">
+          <span>Reading progress</span>
+          <span id="sidebarProgressText">0%</span>
+        </div>
+        <div class="sidebar-progress-bar">
+          <div class="sidebar-progress-fill" id="sidebarProgressFill"></div>
+        </div>
+      </div>
+      <p class="toc-title">Contents</p>
+      <ul class="toc">
+        <li><a href="#overview"><span class="toc-num">01</span> App Overview</a></li>
+        <li><a href="#features"><span class="toc-num">02</span> Features</a></li>
+        <li><a href="#setup"><span class="toc-num">03</span> Merchant Setup</a></li>
+        <li><a href="#dashboard-screenshots"><span class="toc-num">04</span> Dashboard Screenshots</a></li>
+        <li><a href="#troubleshooting"><span class="toc-num">05</span> Troubleshooting</a></li>
+        <li><a href="#privacy"><span class="toc-num">06</span> Data &amp; Privacy</a></li>
+        <li><a href="#settings-guide"><span class="toc-num">07</span> Settings Guide</a></li>
+        <li><a href="#faq"><span class="toc-num">08</span> FAQ</a></li>
+        <li><a href="#help"><span class="toc-num">09</span> Help &amp; Support</a></li>
+      </ul>
+    </aside>
+
+    <main class="main">
+      <header class="topbar" id="topbar">
+        <div class="topbar-left">
+          <span class="topbar-title">CareNetSolutions · CareNet WhatsApp · v1.0</span>
+        </div>
+        <div class="topbar-actions">
+          <button class="topbar-btn primary" type="button" onclick="document.getElementById('dashboard-screenshots').scrollIntoView({behavior:'smooth'})">View Screenshots</button>
+        </div>
+      </header>
+
+      <header class="hero" id="hero">
+        <div class="hero-particles" aria-hidden="true">
+          <span></span><span></span><span></span><span></span>
+        </div>
+        <div class="hero-spotlight" id="heroSpotlight" aria-hidden="true"></div>
+        <div class="hero-inner">
+          <div class="hero-brand">
+            <img class="doc-hero-logo" src="assets/carenet-solutions-logo.png" alt="CareNetSolutions logo" />
+            <div class="hero-copy">
+              <span class="badge">CareNetSolutions</span>
+              <h2>CareNet WhatsApp</h2>
+              <p>Official merchant documentation for the CareNet WhatsApp Shopify app — setup guide, dashboard screenshots, and troubleshooting.</p>
+            </div>
+          </div>
+          <div class="hero-stats">
+            <div class="hero-stat">
+              <strong>9</strong>
+              <span>Sections</span>
+            </div>
+            <div class="hero-stat">
+              <strong>1-Click</strong>
+              <span>WhatsApp Chat</span>
+            </div>
+            <div class="hero-stat">
+              <strong>Global</strong>
+              <span>All Pages</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <section id="overview">
+        <h2>1. App Overview</h2>
+        <div class="meta-grid">
+          <div class="meta-card">
+            <span>App name</span>
+            <strong>CareNet WhatsApp</strong>
+          </div>
+          <div class="meta-card">
+            <span>Made by</span>
+            <strong>CareNetSolutions</strong>
+          </div>
+          <div class="meta-card">
+            <span>Version</span>
+            <strong>1.0</strong>
+          </div>
+          <div class="meta-card">
+            <span>Support</span>
+            <strong><a href="mailto:support@carenetsolutions.com">support@carenetsolutions.com</a></strong>
+          </div>
+        </div>
+        <p style="margin-top: 16px;"><strong>Purpose:</strong> Add a floating WhatsApp chat button to your storefront so customers can message you with one click.</p>
+
+        <h3>Who is this for?</h3>
+        <p>Shopify store owners who want a simple WhatsApp contact button on every page — without coding or complex integrations.</p>
+
+        <h3>What you need</h3>
+        <ul>
+          <li>A Shopify online store (Online Store 2.0 theme)</li>
+          <li>A WhatsApp number you own (mobile or WhatsApp Business)</li>
+          <li>About 5 minutes for first-time setup</li>
+        </ul>
+
+        <h3>What merchants get</h3>
+        <ul>
+          <li>A floating WhatsApp button on all store pages</li>
+          <li>Central control from the app dashboard (number, message, label, on/off)</li>
+          <li>Country code picker with country name (e.g. <code>+91 India</code>)</li>
+          <li>Custom default message pre-filled when WhatsApp opens</li>
+          <li>Button color customization in the theme editor</li>
+        </ul>
+
+        <h3>What the app does not do</h3>
+        <ul>
+          <li>Does not send automated WhatsApp messages</li>
+          <li>Does not read customer WhatsApp chats</li>
+          <li>Does not replace WhatsApp Business API / official WhatsApp marketing tools</li>
+        </ul>
+      </section>
+
+      <section id="features">
+        <h2>2. Features</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Feature</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Global floating button</td>
+              <td>Shows on all pages when App embed is enabled</td>
+            </tr>
+            <tr>
+              <td>Country + phone fields</td>
+              <td>Separate country code and local phone number</td>
+            </tr>
+            <tr>
+              <td>Default message</td>
+              <td>Pre-filled text when customer opens WhatsApp</td>
+            </tr>
+            <tr>
+              <td>Button label</td>
+              <td>Accessibility label for the floating button</td>
+            </tr>
+            <tr>
+              <td>Enable / disable toggle</td>
+              <td>Show or hide button without uninstalling the app</td>
+            </tr>
+            <tr>
+              <td>Theme colors</td>
+              <td>Button and icon colors from Theme → App embeds</td>
+            </tr>
+            <tr>
+              <td>Live Preview</td>
+              <td>See number, message, and button status before you save</td>
+            </tr>
+            <tr>
+              <td>In-app Setup Guide</td>
+              <td>Step-by-step help inside the app dashboard</td>
+            </tr>
+            <tr>
+              <td>Dashboard-only settings</td>
+              <td>Phone, message, and visibility managed in the app</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="setup">
+        <h2>3. Merchant Setup Guide</h2>
+
+        <h3>Step 1 — Install the app</h3>
+        <ol>
+          <li>Open the Shopify App Store and search for <strong>CareNet WhatsApp</strong>, or use your install link.</li>
+          <li>Click <strong>Install app</strong> and approve permissions.</li>
+          <li>Open the app from <strong>Apps</strong> in Shopify Admin.</li>
+        </ol>
+
+        <h3>Step 2 — Configure WhatsApp settings</h3>
+        <p>In the app dashboard:</p>
+        <ol>
+          <li><strong>Country</strong> — Select your country (e.g. <code>+91 India</code>).</li>
+          <li><strong>Phone number</strong> — Enter the number <strong>without</strong> country code (e.g. <code>7741092638</code>).</li>
+          <li><strong>Default message</strong> — Message that opens in WhatsApp (e.g. <code>Hi, I need help.</code>).</li>
+          <li><strong>Button label</strong> — Label for accessibility (e.g. <code>Chat on WhatsApp</code>).</li>
+          <li><strong>Keep WhatsApp button enabled</strong> — Check to show the button on the store.</li>
+          <li>Click <strong>Save settings</strong>.</li>
+        </ol>
+        <p><strong>Example:</strong> Country <code>+91 India</code> + phone <code>7741092638</code> → WhatsApp link uses <code>+91 7741092638</code>.</p>
+
+        <h3>Step 3 — Enable on the storefront (required, one time)</h3>
+        <div class="callout callout-warn">
+          <strong>Important:</strong> Use <strong>App embeds</strong>, not an app block inside a page section. A page block only shows on that one page (e.g. home page only).
+        </div>
+        <ol>
+          <li>Go to <strong>Online Store</strong> → <strong>Themes</strong> → <strong>Customize</strong>.</li>
+          <li>If you previously added a WhatsApp block inside a page section, <strong>remove it</strong>.</li>
+          <li>In the left sidebar, open <strong>App embeds</strong> (puzzle icon).</li>
+          <li>Turn <strong>WhatsApp Floating Button</strong> <strong>ON</strong>.</li>
+          <li>Optional: change <strong>Button color</strong> and <strong>Text color</strong>.</li>
+          <li>Click <strong>Save</strong>.</li>
+        </ol>
+
+        <h3>Step 4 — Verify</h3>
+        <ol>
+          <li>Open your live storefront (home, product, collection, contact pages).</li>
+          <li>Confirm the green WhatsApp button appears bottom-right on <strong>all pages</strong>.</li>
+          <li>Click the button and confirm WhatsApp opens with the correct number and message.</li>
+        </ol>
+      </section>
+
+      <section id="dashboard-screenshots">
+        <h2>4. App Dashboard Screenshots</h2>
+        <p>Visual reference for the CareNet WhatsApp admin interface inside Shopify Admin. Each screenshot maps to the setup steps above.</p>
+
+        <div class="doc-screenshot-grid">
+          <figure class="doc-screenshot doc-screenshot--wide">
+            <span class="doc-screenshot-badge">Step 1 · Open app</span>
+            <img src="assets/screenshots/01-dashboard-overview.png" alt="CareNet WhatsApp dashboard hero with CN logo, phone number chip, and button status" loading="lazy" />
+            <figcaption>Dashboard overview — hero banner, WhatsApp number (+91), button status, and quick stats</figcaption>
+          </figure>
+
+          <figure class="doc-screenshot doc-screenshot--panel">
+            <span class="doc-screenshot-badge">Step 2 · Settings</span>
+            <img src="assets/screenshots/03-settings-form.png" alt="Global WhatsApp Button Settings with country code dropdown, phone number, message, and enable toggle" loading="lazy" />
+            <figcaption>Global WhatsApp Button Settings — country code, phone, message, label, and enable toggle</figcaption>
+          </figure>
+
+          <figure class="doc-screenshot doc-screenshot--panel">
+            <span class="doc-screenshot-badge">Step 2 · Preview</span>
+            <img src="assets/screenshots/04-live-preview.png" alt="Live preview panel showing WhatsApp floating button on a mock storefront" loading="lazy" />
+            <figcaption>Live Preview — updates as you edit settings before saving</figcaption>
+          </figure>
+
+          <figure class="doc-screenshot doc-screenshot--wide doc-screenshot--guide">
+            <span class="doc-screenshot-badge">Step 3 · Theme embed</span>
+            <img src="assets/screenshots/02-setup-guide.png" alt="In-app setup guide with seven steps and theme editor deep link" loading="lazy" />
+            <figcaption>Setup Guide — 7 steps plus <strong>Open Theme Editor → Enable WhatsApp Floating Button</strong></figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section id="troubleshooting">
+        <h2>5. Troubleshooting</h2>
+
+        <h3>Button only shows on home page</h3>
+        <p><strong>Cause:</strong> A WhatsApp block was added to a single page section instead of using App embeds.</p>
+        <p><strong>Fix:</strong></p>
+        <ol>
+          <li>Theme → Customize → remove any WhatsApp block from page sections.</li>
+          <li>Enable <strong>WhatsApp Floating Button</strong> under <strong>App embeds</strong>.</li>
+          <li>Save the theme.</li>
+        </ol>
+
+        <h3>Button does not show anywhere</h3>
+        <p>Check:</p>
+        <ul>
+          <li><strong>Keep WhatsApp button enabled</strong> is checked in the app dashboard.</li>
+          <li>Country and phone number are saved.</li>
+          <li><strong>WhatsApp Floating Button</strong> is ON under App embeds.</li>
+          <li>Theme is saved after enabling the embed.</li>
+          <li>Hard-refresh the storefront (Ctrl+F5 / Cmd+Shift+R).</li>
+        </ul>
+
+        <h3>Wrong phone number on WhatsApp</h3>
+        <ol>
+          <li>Open the app dashboard.</li>
+          <li>Update <strong>Country</strong> and <strong>Phone number</strong>.</li>
+          <li>Click <strong>Save settings</strong>.</li>
+          <li>Do <strong>not</strong> change the number in Theme Customize (only colors are used there).</li>
+        </ol>
+
+        <h3>Enable / disable toggle not working</h3>
+        <ol>
+          <li>Uncheck or check <strong>Keep WhatsApp button enabled</strong>.</li>
+          <li>Click <strong>Save settings</strong>.</li>
+          <li>Refresh the storefront.</li>
+        </ol>
+
+        <h3>Button shows but wrong message</h3>
+        <p>Update <strong>Default message</strong> in the app dashboard and click <strong>Save settings</strong>.</p>
+      </section>
+
+      <section id="privacy">
+        <h2>6. Data &amp; Privacy</h2>
+        <p>How CareNet WhatsApp handles store and app data.</p>
+
+        <h3>Data collected</h3>
+        <ul>
+          <li><strong>Shop connection</strong> — Required so the app stays installed and can load your settings.</li>
+          <li><strong>App settings</strong> — WhatsApp number, default message, button label, and enabled state.</li>
+        </ul>
+
+        <h3>Data not collected</h3>
+        <ul>
+          <li>Customer personal data from the storefront</li>
+          <li>WhatsApp chat content</li>
+          <li>Order or payment data (unless added in future versions)</li>
+        </ul>
+
+        <h3>Third-party services</h3>
+        <ul>
+          <li><strong>WhatsApp (Meta)</strong> — When a customer clicks the button, they are redirected to WhatsApp. Meta's terms and privacy policy apply.</li>
+        </ul>
+
+        <h3>Merchant responsibility</h3>
+        <ul>
+          <li>Merchants must use a WhatsApp number they own or are authorized to use.</li>
+          <li>Merchants are responsible for compliance with local laws and WhatsApp/Meta policies.</li>
+        </ul>
+      </section>
+
+      <section id="settings-guide">
+        <h2>7. Settings Guide — What Each Field Does</h2>
+        <p>Everything you can configure in the CareNet WhatsApp app dashboard and theme editor.</p>
+
+        <h3>App dashboard settings</h3>
+        <p>Open <strong>Apps → CareNet WhatsApp</strong> in Shopify Admin.</p>
+        <table>
+          <thead>
+            <tr>
+              <th>Setting</th>
+              <th>What to enter</th>
+              <th>Example</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Country code</strong></td>
+              <td>Click the dropdown and pick your country</td>
+              <td><code>+91 India</code></td>
+            </tr>
+            <tr>
+              <td><strong>Phone number</strong></td>
+              <td>Your WhatsApp number <strong>without</strong> the country code — digits only</td>
+              <td><code>7741092638</code></td>
+            </tr>
+            <tr>
+              <td><strong>Default message</strong></td>
+              <td>Text pre-filled when a customer opens WhatsApp</td>
+              <td><code>Hi, I need help.</code></td>
+            </tr>
+            <tr>
+              <td><strong>Button label</strong></td>
+              <td>Short label for accessibility (screen readers)</td>
+              <td><code>Chat on WhatsApp</code></td>
+            </tr>
+            <tr>
+              <td><strong>Keep WhatsApp button enabled</strong></td>
+              <td>Turn <strong>ON</strong> to show the button on your store; turn <strong>OFF</strong> to hide it without uninstalling the app</td>
+              <td>ON</td>
+            </tr>
+            <tr>
+              <td><strong>Save settings</strong></td>
+              <td>Always click after changing any field — changes apply to your live store</td>
+              <td>—</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>Live Preview panel</h3>
+        <ul>
+          <li><strong>Status</strong> — Shows if the button is <em>Visible</em> or <em>Hidden</em> on your store</li>
+          <li><strong>Number</strong> — Full WhatsApp number that will be used (country code + phone)</li>
+          <li><strong>Message</strong> — Default message customers will see in WhatsApp</li>
+          <li>Updates as you type — you do not need to save to preview</li>
+        </ul>
+
+        <h3>Theme editor settings (colors only)</h3>
+        <p>Go to <strong>Online Store → Themes → Customize → App embeds → WhatsApp Floating Button</strong>.</p>
+        <table>
+          <thead>
+            <tr>
+              <th>Setting</th>
+              <th>What it does</th>
+              <th>Default</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Button color</strong></td>
+              <td>Background color of the floating WhatsApp button</td>
+              <td>Green <code>#25D366</code></td>
+            </tr>
+            <tr>
+              <td><strong>Text color</strong></td>
+              <td>Color of the WhatsApp icon inside the button</td>
+              <td>White <code>#FFFFFF</code></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="callout callout-warn">
+          <strong>Note:</strong> Phone number, message, and button label are <strong>not</strong> changed in the theme editor. Update those only in the app dashboard.
+        </div>
+
+        <h3>What your customers see</h3>
+        <ul>
+          <li>A round green WhatsApp button fixed at the <strong>bottom-right</strong> of every page</li>
+          <li>Visible on home, product, collection, cart, and other store pages</li>
+          <li>One tap opens WhatsApp (app or web) with your number and default message ready</li>
+          <li>Works on mobile and desktop</li>
+        </ul>
+      </section>
+
+      <section id="faq">
+        <h2>8. Frequently Asked Questions</h2>
+
+        <h3>Do I need WhatsApp Business?</h3>
+        <p>No. The app works with a regular WhatsApp number and with WhatsApp Business.</p>
+
+        <h3>Can I change my WhatsApp number later?</h3>
+        <p>Yes. Open the app dashboard, update <strong>Country code</strong> and <strong>Phone number</strong>, then click <strong>Save settings</strong>.</p>
+
+        <h3>Why is the button only on my home page?</h3>
+        <p>You may have added a page block instead of using <strong>App embeds</strong>. Follow <a href="#setup">Step 3 in the setup guide</a> to enable the global floating button.</p>
+
+        <h3>Can I hide the button temporarily?</h3>
+        <p>Yes. Turn off <strong>Keep WhatsApp button enabled</strong> in the dashboard and click <strong>Save settings</strong>. You do not need to uninstall the app.</p>
+
+        <h3>Where do I change the button color?</h3>
+        <p>In the theme editor under <strong>App embeds → WhatsApp Floating Button</strong>. Number and message are changed in the app dashboard only.</p>
+
+        <h3>Does the app read my customer WhatsApp chats?</h3>
+        <p>No. The app only adds a link to WhatsApp. Conversations happen directly between you and your customer in WhatsApp.</p>
+
+        <h3>Does the app collect customer personal data?</h3>
+        <p>No customer personal data is collected from your storefront. See <a href="#privacy">Data &amp; Privacy</a> for details.</p>
+
+        <h3>How long does setup take?</h3>
+        <p>About 5 minutes: save your settings in the app, enable the App embed once in the theme editor, and verify on your store.</p>
+      </section>
+
+      <section id="help">
+        <h2>9. Help &amp; Support</h2>
+        <p>Need help with setup or the button not showing? Contact CareNetSolutions support.</p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Contact</th>
+              <th>Details</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Support email</td>
+              <td><a href="mailto:support@carenetsolutions.com">support@carenetsolutions.com</a></td>
+            </tr>
+            <!-- <tr>
+              <td>Privacy email</td>
+              <td><a href="mailto:support@carenetsolutions.com">privacy@carenetsolutions.com</a></td>
+            </tr> -->
+            <tr>
+              <td>App name</td>
+              <td>CareNet WhatsApp</td>
+            </tr>
+            <tr>
+              <td>Developer</td>
+              <td>CareNetSolutions</td>
+            </tr>
+            <tr>
+              <td>App version</td>
+              <td>1.0</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>When contacting support, include:</h3>
+        <ul>
+          <li>Your Shopify store URL (e.g. <code>your-store.myshopify.com</code>)</li>
+          <li>A short description of the issue</li>
+          <li>Screenshots of the app dashboard or theme editor if possible</li>
+          <li>Whether App embed is enabled and settings are saved</li>
+        </ul>
+      </section>
+
+      <p class="footer">Last updated: June 2026 · CareNetSolutions · CareNet WhatsApp · <a href="mailto:support@carenetsolutions.com">support@carenetsolutions.com</a> · <a href="mailto:privacy@carenetsolutions.com">privacy@carenetsolutions.com</a></p>
+    </main>
+  </div>
+
+  <script>
+    (function () {
+      var sectionMeta = {
+        overview: { icon: "📋", num: "01", title: "App Overview" },
+        features: { icon: "⚡", num: "02", title: "Features" },
+        setup: { icon: "🚀", num: "03", title: "Merchant Setup Guide" },
+        "dashboard-screenshots": { icon: "🖼", num: "04", title: "App Dashboard Screenshots" },
+        troubleshooting: { icon: "🔧", num: "05", title: "Troubleshooting" },
+        privacy: { icon: "🔒", num: "06", title: "Data & Privacy" },
+        "settings-guide": { icon: "⚙️", num: "07", title: "Settings Guide" },
+        faq: { icon: "❓", num: "08", title: "FAQ" },
+        help: { icon: "📞", num: "09", title: "Help & Support" }
+      };
+
+      function enhanceSections() {
+        document.querySelectorAll("section[id]").forEach(function (section) {
+          if (section.querySelector(".section-head")) return;
+          var id = section.getAttribute("id");
+          var meta = sectionMeta[id];
+          if (!meta) return;
+
+          var h2 = section.querySelector("h2");
+          if (!h2) return;
+
+          var head = document.createElement("div");
+          head.className = "section-head";
+          head.innerHTML =
+            '<div class="section-icon" aria-hidden="true">' + meta.icon + "</div>" +
+            '<div><span class="section-label">Section ' + meta.num + "</span>" +
+            "<h2>" + meta.title + "</h2></div>";
+
+          var body = document.createElement("div");
+          body.className = "section-body";
+          while (h2.nextSibling) {
+            body.appendChild(h2.nextSibling);
+          }
+
+          section.innerHTML = "";
+          section.appendChild(head);
+          section.appendChild(body);
+        });
+      }
+
+      function enhanceCodeBlocks() {
+        document.querySelectorAll("pre").forEach(function (pre) {
+          if (pre.querySelector(".code-head")) return;
+          var code = pre.querySelector("code");
+          if (!code) return;
+          var text = code.textContent || "";
+          var label = "Snippet";
+          if (/npm|shopify|deploy|git/i.test(text)) label = "Terminal";
+          else if (/^\s*[\[{]/.test(text)) label = "JSON";
+          else if (/liquid|{%|%}/i.test(text)) label = "Liquid";
+          var head = document.createElement("div");
+          head.className = "code-head";
+          head.innerHTML =
+            '<span class="code-dot red"></span><span class="code-dot yellow"></span><span class="code-dot green"></span>' +
+            '<span class="code-label">' + label + "</span>";
+          pre.insertBefore(head, code);
+        });
+      }
+
+      enhanceSections();
+      enhanceCodeBlocks();
+
+      var sections = document.querySelectorAll("section[id]");
+      var tocLinks = document.querySelectorAll(".toc a");
+      var progressBar = document.getElementById("scrollProgress");
+      var sidebarFill = document.getElementById("sidebarProgressFill");
+      var sidebarText = document.getElementById("sidebarProgressText");
+      var backTop = document.getElementById("backTop");
+      var pageLoader = document.getElementById("pageLoader");
+      var hero = document.getElementById("hero");
+      var heroSpotlight = document.getElementById("heroSpotlight");
+      var metaCards = document.querySelectorAll(".meta-card");
+      var reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      window.addEventListener("load", function () {
+        setTimeout(function () {
+          pageLoader.classList.add("hidden");
+        }, reducedMotion ? 0 : 1100);
+      });
+
+      if (reducedMotion) {
+        sections.forEach(function (section) {
+          section.classList.add("visible");
+        });
+      } else {
+        var revealObserver = new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (entry) {
+              if (entry.isIntersecting) entry.target.classList.add("visible");
+            });
+          },
+          { threshold: 0.08, rootMargin: "0px 0px -20px 0px" }
+        );
+        sections.forEach(function (section) {
+          revealObserver.observe(section);
+        });
+      }
+
+      var activeObserver = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              var id = entry.target.getAttribute("id");
+              tocLinks.forEach(function (link) {
+                link.classList.toggle("active", link.getAttribute("href") === "#" + id);
+              });
+            }
+          });
+        },
+        { threshold: 0.35, rootMargin: "-18% 0px -55% 0px" }
+      );
+
+      sections.forEach(function (section) {
+        activeObserver.observe(section);
+      });
+
+      function updateScrollUi() {
+        var scrollTop = window.scrollY || document.documentElement.scrollTop;
+        var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        var progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+        progressBar.style.width = progress + "%";
+        if (sidebarFill) sidebarFill.style.width = progress + "%";
+        if (sidebarText) sidebarText.textContent = Math.round(progress) + "%";
+        backTop.classList.toggle("show", scrollTop > 480);
+      }
+
+      window.addEventListener("scroll", updateScrollUi, { passive: true });
+      updateScrollUi();
+
+      backTop.addEventListener("click", function () {
+        window.scrollTo({ top: 0, behavior: reducedMotion ? "auto" : "smooth" });
+      });
+
+      tocLinks.forEach(function (link) {
+        link.addEventListener("click", function (event) {
+          var target = document.querySelector(link.getAttribute("href"));
+          if (target) {
+            event.preventDefault();
+            target.scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth", block: "start" });
+            history.pushState(null, "", link.getAttribute("href"));
+          }
+        });
+      });
+
+      if (!reducedMotion && hero && heroSpotlight) {
+        hero.addEventListener("mousemove", function (event) {
+          var rect = hero.getBoundingClientRect();
+          heroSpotlight.style.left = event.clientX - rect.left + "px";
+          heroSpotlight.style.top = event.clientY - rect.top + "px";
+        });
+      }
+
+      if (!reducedMotion) {
+        metaCards.forEach(function (card) {
+          card.addEventListener("mousemove", function (event) {
+            var rect = card.getBoundingClientRect();
+            var rotateX = ((event.clientY - rect.top - rect.height / 2) / rect.height) * -12;
+            var rotateY = ((event.clientX - rect.left - rect.width / 2) / rect.width) * 12;
+            card.classList.add("tilt-active");
+            card.style.transform =
+              "perspective(700px) rotateX(" + rotateX + "deg) rotateY(" + rotateY + "deg) translateY(-6px) scale(1.03)";
+            card.style.boxShadow = "0 20px 50px rgba(37, 211, 102, 0.2)";
+          });
+          card.addEventListener("mouseleave", function () {
+            card.classList.remove("tilt-active");
+            card.style.transform = "";
+            card.style.boxShadow = "";
+          });
+        });
+
+        if (backTop) {
+          backTop.addEventListener("mousemove", function (event) {
+            var rect = backTop.getBoundingClientRect();
+            var x = event.clientX - rect.left - rect.width / 2;
+            var y = event.clientY - rect.top - rect.height / 2;
+            backTop.style.transform = "translate(" + x * 0.2 + "px," + y * 0.2 + "px) scale(1.06)";
+          });
+          backTop.addEventListener("mouseleave", function () {
+            backTop.style.transform = "";
+          });
+        }
+      }
+    })();
+  </script>
+</body>
+</html>
