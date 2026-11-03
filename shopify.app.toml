@@ -11,17 +11,19 @@ automatically_update_urls_on_dev = true
 [webhooks]
 api_version = "2026-07"
 
+  # Full URLs on purpose: the app is hosted under the /whatsapp subpath, so
+  # relative URIs could resolve to the domain root instead of the app.
   [[webhooks.subscriptions]]
   topics = [ "app/scopes_update" ]
-  uri = "/webhooks/app/scopes_update"
+  uri = "https://carenetsolutions.co.uk/whatsapp/webhooks/app/scopes_update"
 
   [[webhooks.subscriptions]]
   topics = [ "app/uninstalled" ]
-  uri = "/webhooks/app/uninstalled"
+  uri = "https://carenetsolutions.co.uk/whatsapp/webhooks/app/uninstalled"
 
   [[webhooks.subscriptions]]
   compliance_topics = [ "customers/data_request", "customers/redact", "shop/redact" ]
-  uri = "/webhooks/compliance"
+  uri = "https://carenetsolutions.co.uk/whatsapp/webhooks/compliance"
 
 [access_scopes]
 # App only reads/writes its own installation metafields via GraphQL Admin API.
