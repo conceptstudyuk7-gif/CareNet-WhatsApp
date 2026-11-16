@@ -6,7 +6,7 @@ EXPOSE 3000
 WORKDIR /app
 
 ENV NODE_ENV=production
-ENV SHOPIFY_APP_URL=https://whatsapp.carenetsolutions.co.uk
+ENV SHOPIFY_APP_URL=https://apps.carenetsolutions.co.uk
 
 COPY package.json package-lock.json* ./
 
