@@ -2,7 +2,7 @@
 
 client_id = "447ba463b8a37bbb478907ed327ccb7c"
 name = "CareNet WhatsApp"
-application_url = "https://carenetsolutions.co.uk/whatsapp"
+application_url = "https://apps.carenetsolutions.co.uk"
 embedded = true
 
 [build]
@@ -13,19 +13,22 @@ api_version = "2026-07"
 
   [[webhooks.subscriptions]]
   topics = [ "app/scopes_update" ]
-  uri = "/webhooks/app/scopes_update"
+  uri = "https://apps.carenetsolutions.co.uk/webhooks/app/scopes_update"
 
   [[webhooks.subscriptions]]
   topics = [ "app/uninstalled" ]
-  uri = "/webhooks/app/uninstalled"
+  uri = "https://apps.carenetsolutions.co.uk/webhooks/app/uninstalled"
 
   [[webhooks.subscriptions]]
   compliance_topics = [ "customers/data_request", "customers/redact", "shop/redact" ]
-  uri = "/webhooks/compliance"
+  uri = "https://apps.carenetsolutions.co.uk/webhooks/compliance.php"
 
 [access_scopes]
 # App only reads/writes its own installation metafields via GraphQL Admin API.
 scopes = ""
 
 [auth]
-redirect_urls = [ "https://carenetsolutions.co.uk/whatsapp/auth/callback/" ]
+redirect_urls = [
+  "https://apps.carenetsolutions.co.uk/auth/callback",
+  "https://apps.carenetsolutions.co.uk/auth/callback/"
+]

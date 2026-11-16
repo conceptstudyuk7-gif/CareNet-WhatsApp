@@ -106,7 +106,7 @@ def main():
     add_heading(doc, "7. Support & Privacy", 2)
     doc.add_paragraph("Support email: support@carenetsolutions.com")
     doc.add_paragraph("Privacy email: privacy@carenetsolutions.com")
-    doc.add_paragraph("Privacy policy: https://carenetsolutions.co.uk/whatsapp/privacy")
+    doc.add_paragraph("Privacy policy: https://whatsapp.carenetsolutions.co.uk/privacy")
 
     add_heading(doc, "8. Shopify App Review Instructions", 2)
     for step in [
