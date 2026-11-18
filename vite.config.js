@@ -1,7 +1,64 @@
+import { copyFileSync } from "node:fs";
+import path from "node:path";
 import { reactRouter } from "@react-router/dev/vite";
 import { defineConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 import { getViteBase } from "./app-path.config.js";
+
+/**
+ * Client-only production names. React Router still owns the server bundle
+ * (`build/server/index.js`). This plugin runs first so the client build emits
+ * hashed `assets/index-[hash].js` and `assets/index-[hash].css` files, while
+ * the SSR build keeps its own entry filename.
+ */
+function clientProductionBuild() {
+  return {
+    name: "client-production-build",
+    apply: "build",
+    config(_config, { isSsrBuild }) {
+      if (isSsrBuild) return null;
+
+      return {
+        build: {
+          assetsDir: "assets",
+          assetsInlineLimit: 0,
+          cssCodeSplit: true,
+          cssMinify: true,
+          emptyOutDir: true,
+          minify: "esbuild",
+          sourcemap: false,
+          rollupOptions: {
+            output: {
+              entryFileNames: "assets/index-[hash].js",
+              chunkFileNames: "assets/[name]-[hash].js",
+              assetFileNames(assetInfo) {
+                const sourceName =
+                  assetInfo.names?.[0] || assetInfo.name || "";
+
+                if (sourceName.endsWith(".css")) {
+                  return "assets/index-[hash][extname]";
+                }
+
+                return "assets/[name]-[hash][extname]";
+              },
+            },
+          },
+        },
+      };
+    },
+    closeBundle() {
+      const manifestPath = path.resolve("build/client/.vite/manifest.json");
+      const savedManifestPath = path.resolve("build/client-manifest.json");
+
+      try {
+        copyFileSync(manifestPath, savedManifestPath);
+      } catch {
+        // The manifest exists only after the client build. React Router
+        // removes build/client/.vite once the server build finishes.
+      }
+    },
+  };
+}
 
 // Related: https://github.com/remix-run/remix/issues/2835#issuecomment-1144102176
 // Replace the HOST env var with SHOPIFY_APP_URL so that it doesn't break the Vite server.
@@ -50,9 +107,18 @@ export default defineConfig({
       allow: ["app", "node_modules"],
     },
   },
-  plugins: [reactRouter(), tsconfigPaths()],
+  plugins: [clientProductionBuild(), reactRouter(), tsconfigPaths()],
   build: {
+    assetsDir: "assets",
+    // Keep SVG, WebP, and other images as files so they get hashed names.
     assetsInlineLimit: 0,
+    cssMinify: true,
+    sourcemap: false,
+    // Drop debugger statements. Leave console.error in place for production logs.
+    esbuild: {
+      drop: ["debugger"],
+      legalComments: "none",
+    },
   },
   optimizeDeps: {
     include: ["@shopify/app-bridge-react"],

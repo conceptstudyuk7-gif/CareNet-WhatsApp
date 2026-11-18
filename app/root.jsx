@@ -1,5 +1,6 @@
 import { Links, Meta, Outlet, Scripts, ScrollRestoration, isRouteErrorResponse, useLoaderData, useRouteError } from "react-router";
 import { BRANDING } from "./branding.js";
+import logoMark from "./assets/logo.svg";
 
 export const loader = () => {
   return { apiKey: process.env.SHOPIFY_API_KEY || "" };
@@ -14,6 +15,7 @@ export default function App() {
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         <meta name="shopify-api-key" content={apiKey} />
+        <link rel="icon" href={logoMark} type="image/svg+xml" />
         <script src="https://cdn.shopify.com/shopifycloud/app-bridge.js"></script>
         <link rel="preconnect" href="https://cdn.shopify.com/" />
         <link

@@ -1,5 +1,6 @@
 import { redirect } from "react-router";
 import { BRANDING } from "../../branding.js";
+import bannerUrl from "../../assets/banner.webp";
 import styles from "./styles.module.css";
 
 export const meta = () => [
@@ -33,6 +34,11 @@ export default function AppLanding() {
     <div className={styles.page}>
       <div className={styles.wrap}>
         <header className={styles.header}>
+          <img
+            src={bannerUrl}
+            alt=""
+            className={styles.banner}
+          />
           <img
             src={BRANDING.logo}
             alt={`${BRANDING.company} logo`}
